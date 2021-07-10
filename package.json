@@ -1,0 +1,26 @@
+{
+  "name": "Ecommerce-app",
+  "version": "1.0.0",
+  "description": "weekly task",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erhaborfavour/Ecommerce-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Erhaborfavour/Ecommerce-app/issues"
+  },
+  "homepage": "https://github.com/Erhaborfavour/Ecommerce-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.11"
+  }
+}
