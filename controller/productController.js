@@ -1,14 +1,31 @@
-const express = require ("express")
-const app = express()
-const {products} = require ("./models/products")
+const products = require ('../models/products')
 
-app.use(express.json())
 
-app.get('/products', (req, res )=>{
+// get all products
+
+const getProducts = (req, res ) => {
     res.status(200).json(products);
-})
+}
 
-app.post('/products', (req, res) => {
+// get single product
+const getSingleProduct = (req, res) => {
+    const { id } = req.params;
+    // find product by id
+    singleProduct = Products.find((product) => product.id === Number(id));
+    if (!singleProduct) {
+      return res
+        .status(404)
+        .json({ success: false, msg: `No product with id ${id}.` });
+    }
+    return res.status(200).json({
+      success: true,
+      data: singleProduct,
+    });
+  };
+
+
+// create new products
+const postProducts = (req, res) => {
   const { name , price, desc, image } = req.body
   if (!name|| !price|| !desc || !image ) {
     return res.status(400).json({ success: false, msg: 'please provide name, price,desc,image' })
@@ -17,9 +34,10 @@ app.post('/products', (req, res) => {
   products.push( newProducts);
 
   res.status(200).json({ success: true, data: products })
-})
+}
+// update existing product
 
-app.put('/products/:id',(req, res)=>{
+const updateProducts = (req, res)=>{
 const {id} = req.params
 const { name , price, desc, image } = req.body
 const product = products.find((product)=> product.id=== Number (id))
@@ -40,20 +58,26 @@ const newProduct = products.map((product)=>{
 })
 res.status(200).json({ success: true, data: newProduct })
 
-})
+}
+// delete products
 
-app.delete ('/products/:id',(req, res)=>{
+const deleteProducts = (req, res)=>{
   const {id} = req.params
   
     const product = products.find((product) => product.id === Number(req.params.id))
     if (!product) {
       return res.status(404).json({ success: false, msg: `no product with id ${id}` })
     }
-    const newProduct = products.filter(
+    const deleteProduct = products.filter(
       (product) => product.id !== Number(id)
     )
-    return res.status(200).json({ success: true, data: newProduct})
-  })
-app.listen(7000, () => {
-  console.log(`Express server is currently running on port 7000`)
-});
+    return res.status(200).json({ success: true, data: deleteProduct});
+  }
+  
+  module.exports = {
+    getProducts,
+    getSingleProduct,
+    postProducts,
+    updateProducts,
+    deleteProducts,
+  };
